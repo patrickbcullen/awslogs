@@ -4,6 +4,7 @@ import os
 import time
 from datetime import datetime, timedelta
 from collections import deque
+from pprint import pprint
 
 import boto3
 from botocore.compat import json, six, total_seconds
@@ -221,7 +222,7 @@ class AWSLogs(object):
                     # no firstEventTimestamp.
                     yield stream['logStreamName']
                 elif max(stream['firstEventTimestamp'], window_start) <= \
-                        min(stream['lastEventTimestamp'], window_end):
+                        min(stream['lastIngestionTime'], window_end):
                     yield stream['logStreamName']
 
     def color(self, text, color):
